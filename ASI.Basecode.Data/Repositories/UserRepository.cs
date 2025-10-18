@@ -17,5 +17,22 @@ namespace ASI.Basecode.Data.Repositories
             return this.GetDbSet<User>();
         }
 
+        public void AddUser(User user)
+        {
+            this.GetDbSet<User>().Add(user);
+            UnitOfWork.SaveChanges();
+        }
+
+        public void UpdateUser(User user)
+        {
+            this.GetDbSet<User>().Update(user);
+            UnitOfWork.SaveChanges();
+        }
+
+        public void DeleteUser(User user)
+        {
+            this.GetDbSet<User>().Remove(user);
+            UnitOfWork.SaveChanges();
+        }
     }
 }

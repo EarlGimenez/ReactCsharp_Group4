@@ -197,3 +197,7 @@ $RECYCLE.BIN/
 node_modules
 */src/*/Scripts/**/*.js
 */src/*/Scripts/**/*.js.map
+
+# Ignore external web application
+ASI.Basecode.WebApp/Documentation/
+ASI.Basecode.WebApp/WebAppExternal/

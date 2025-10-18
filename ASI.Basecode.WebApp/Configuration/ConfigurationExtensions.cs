@@ -4,14 +4,14 @@ using Microsoft.Extensions.Logging;
 
 namespace ASI.Basecode.WebApp.Extensions.Configuration
 {
-    /// <summary>
+    /// 
     /// Configuration Extension
-    /// </summary>
+    /// 
     public static class ConfigurationExtensions
     {
-        /// <summary>
+        /// 
         /// Gets the setup root directory path.
-        /// </summary>
+        /// 
         /// <param name="configuration">Configuration</param>
         /// <returns>Set up root path</returns>
         public static string GetSetupRootDirectoryPath(this IConfiguration configuration)
@@ -20,9 +20,9 @@ namespace ASI.Basecode.WebApp.Extensions.Configuration
                                 .GetValue<string>("SetupRoot");
         }
 
-        /// <summary>
+        /// 
         /// Gets the CSV output folder path.
-        /// </summary>
+        /// 
         /// <param name="configuration">The configuration.</param>
         /// <returns></returns>
         public static string GetCsvOutputFolderPath(this IConfiguration configuration)
@@ -31,9 +31,9 @@ namespace ASI.Basecode.WebApp.Extensions.Configuration
                                 .GetValue<string>("CsvOutputFolderPath");
         }
 
-        /// <summary>
+        /// 
         /// Gets the CSV import backup path.
-        /// </summary>
+        /// 
         /// <param name="configuration">The configuration.</param>
         /// <returns></returns>
         public static string GetCsvImportBackupPath(this IConfiguration configuration)
@@ -42,9 +42,9 @@ namespace ASI.Basecode.WebApp.Extensions.Configuration
                                .GetValue<string>("CsvImportBackupPath");
         }
 
-        /// <summary>
+        /// 
         /// Gets the logging section.
-        /// </summary>
+        /// 
         /// <param name="configuration">Configuration</param>
         /// <returns>Logging settings</returns>
         public static IConfigurationSection GetLoggingSection(this IConfiguration configuration)
@@ -52,9 +52,9 @@ namespace ASI.Basecode.WebApp.Extensions.Configuration
             return configuration.GetSection("Logging");
         }
 
-        /// <summary>
+        /// 
         /// Gets the logging log level.
-        /// </summary>
+        /// 
         /// <param name="configuration">Configuration</param>
         /// <param name="name">Name</param>
         /// <returns>Logging level</returns>
@@ -64,9 +64,9 @@ namespace ASI.Basecode.WebApp.Extensions.Configuration
                                 .GetValue<LogLevel>(string.Format("LogLevel:{0}", name));
         }
 
-        /// <summary>
+        /// 
         /// Gets the size limit of each log file.
-        /// </summary>
+        /// 
         /// <param name="configuration">Configuration.</param>
         /// <returns>Log size limit</returns>
         public static string GetLogFileSize(this IConfiguration configuration)
@@ -75,9 +75,9 @@ namespace ASI.Basecode.WebApp.Extensions.Configuration
                                 .GetValue<string>("LogFileSize");
         }
 
-        /// <summary>
+        /// 
         /// Gets the token authentication
-        /// </summary>
+        /// 
         /// <param name="configuration">Configuration</param>
         /// <returns>Token authentication values</returns>
         public static TokenAuthentication GetTokenAuthentication(this IConfiguration configuration)

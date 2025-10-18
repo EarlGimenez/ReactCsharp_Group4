@@ -14,29 +14,29 @@ using static ASI.Basecode.Resources.Constants.Enums;
 
 namespace ASI.Basecode.WebApp.Authentication
 {
-    /// <summary>
+    /// 
     /// SignInManager
-    /// </summary>
+    /// 
     public class SignInManager
     {
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        /// <summary>
+        /// 
         /// Gets or sets the user.
-        /// </summary>
+        /// 
         public LoginUser user { get; set; }
 
-        /// <summary>
+        /// 
         /// Initializes a new instance of the SignInManager class.
-        /// </summary>
+        /// 
         public SignInManager()
         {
         }
 
-        /// <summary>
+        /// 
         /// Initializes a new instance of the SignInManager class.
-        /// </summary>
+        /// 
         /// <param name="configuration">The configuration.</param>
         /// <param name="accountService">The account service.</param>
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
@@ -48,9 +48,9 @@ namespace ASI.Basecode.WebApp.Authentication
             user = new LoginUser();
         }
 
-        /// <summary>
+        /// 
         /// Gets the claims identity.
-        /// </summary>
+        /// 
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns>The successfully completed task</returns>
@@ -71,9 +71,9 @@ namespace ASI.Basecode.WebApp.Authentication
             return Task.FromResult(claimsIdentity);
         }
 
-        /// <summary>
+        /// 
         /// Creates the claims identity.
-        /// </summary>
+        /// 
         /// <param name="user">The user.</param>
         /// <returns>Instance of ClaimsIdentity</returns>
         public ClaimsIdentity CreateClaimsIdentity(User user)
@@ -91,9 +91,9 @@ namespace ASI.Basecode.WebApp.Authentication
             return new ClaimsIdentity(claims, Const.AuthenticationScheme);
         }
 
-        /// <summary>
+        /// 
         /// Creates the claims principal.
-        /// </summary>
+        /// 
         /// <param name="identity">The identity.</param>
         /// <returns>Created claims principal</returns>
         public IPrincipal CreateClaimsPrincipal(ClaimsIdentity identity)
@@ -103,9 +103,9 @@ namespace ASI.Basecode.WebApp.Authentication
             return this.CreateClaimsPrincipal(identities);
         }
 
-        /// <summary>
+        /// 
         /// Creates the claims principal.
-        /// </summary>
+        /// 
         /// <param name="identities">The identities.</param>
         /// <returns>Created claims principal</returns>
         public IPrincipal CreateClaimsPrincipal(IEnumerable<ClaimsIdentity> identities)
@@ -114,9 +114,9 @@ namespace ASI.Basecode.WebApp.Authentication
             return principal;
         }
 
-        /// <summary>
+        /// 
         /// Signs in user asynchronously
-        /// </summary>
+        /// 
         /// <param name="user">The user.</param>
         /// <param name="isPersistent">if set to <c>true</c> [is persistent].</param>
         public async Task SignInAsync(User user, bool isPersistent = false)
@@ -126,9 +126,9 @@ namespace ASI.Basecode.WebApp.Authentication
             await this.SignInAsync(principal, isPersistent);
         }
 
-        /// <summary>
+        /// 
         /// Signs in user asynchronously
-        /// </summary>
+        /// 
         /// <param name="principal">The principal.</param>
         /// <param name="isPersistent">if set to <c>true</c> [is persistent].</param>
         public async Task SignInAsync(IPrincipal principal, bool isPersistent = false)
@@ -147,9 +147,9 @@ namespace ASI.Basecode.WebApp.Authentication
                             });
         }
 
-        /// <summary>
+        /// 
         /// Signs out user asynchronously
-        /// </summary>
+        /// 
         public async Task SignOutAsync()
         {
             var token = _configuration.GetTokenAuthentication();

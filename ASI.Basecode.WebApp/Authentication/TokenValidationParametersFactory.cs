@@ -7,25 +7,25 @@ using System.Text;
 
 namespace ASI.Basecode.WebApp.Authentication
 {
-    /// <summary>
+    /// 
     /// Token Validation
-    /// </summary>
+    /// 
     public class TokenValidationParametersFactory
     {
         private readonly IConfiguration _configuration;
 
-        /// <summary>
+        /// 
         /// constructor
-        /// </summary>
+        /// 
         /// <param name="configuration"></param>
         public TokenValidationParametersFactory(IConfiguration configuration)
         {
             this._configuration = configuration;
         }
 
-        /// <summary>
+        /// 
         /// Creates token validation instance
-        /// </summary>
+        /// 
         /// <returns></returns>
         public TokenValidationParameters Create()
         {

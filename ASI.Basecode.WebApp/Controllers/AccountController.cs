@@ -24,9 +24,9 @@ namespace ASI.Basecode.WebApp.Controllers
         private readonly IConfiguration _appConfiguration;
         private readonly IUserService _userService;
 
-        /// <summary>
+        /// 
         /// Initializes a new instance of the <see cref="AccountController"/> class.
-        /// </summary>
+        /// 
         /// <param name="signInManager">The sign in manager.</param>
         /// <param name="localizer">The localizer.</param>
         /// <param name="userService">The user service.</param>
@@ -54,9 +54,9 @@ namespace ASI.Basecode.WebApp.Controllers
             this._userService = userService;
         }
 
-        /// <summary>
+        /// 
         /// Login Method
-        /// </summary>
+        /// 
 
         [HttpPost]
         [AllowAnonymous]
@@ -73,9 +73,9 @@ namespace ASI.Basecode.WebApp.Controllers
             return Ok(user);
         }
 
-        /// <summary>
+        /// 
         /// Sign Out current account
-        /// </summary>
+        /// 
         [AllowAnonymous]
         public async Task<IActionResult> SignOutUser()
         {
