@@ -12,9 +12,9 @@ namespace ASI.Basecode.WebApp
     // Logger configuration
     internal partial class StartupConfigurer
     {
-        /// <summary>
+        /// 
         /// Configure the logger
-        /// </summary>
+        /// 
         private void ConfigureLogger()
         {
             var loggerFactory = this._app.ApplicationServices.GetService<ILoggerFactory>();

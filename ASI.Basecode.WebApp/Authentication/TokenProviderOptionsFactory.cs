@@ -5,14 +5,14 @@ using System;
 
 namespace ASI.Basecode.WebApp.Authentication
 {
-    /// <summary>
+    /// 
     /// Token provider factory
-    /// </summary>
+    /// 
     public class TokenProviderOptionsFactory
     {
-        /// <summary>
+        /// 
         /// Creates the token
-        /// </summary>
+        /// 
         /// <param name="token">Token authentication</param>
         /// <param name="signingKey">Signing key</param>
         /// <returns>Token Provider Options</returns>

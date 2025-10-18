@@ -4,37 +4,37 @@ using static ASI.Basecode.Resources.Constants.Enums;
 
 namespace ASI.Basecode.WebApp.Models
 {
-    /// <summary>
+    /// 
     /// ApiResult
-    /// </summary>
+    /// 
     /// <typeparam name="T"></typeparam>
     public class ApiResult<T>
     {
-        /// <summary>
+        /// 
         /// Gets or sets the response.
-        /// </summary>
+        /// 
         public object Response { get; set; }
-        /// <summary>
+        /// 
         /// Gets or sets the status.
-        /// </summary>
+        /// 
         [JsonConverter(typeof(StringEnumConverter))]
         public Status Status { get; set; }
-        /// <summary>
+        /// 
         /// Gets or sets the message.
-        /// </summary>
+        /// 
         public string Message { get; set; }
-        /// <summary>
+        /// 
         /// Gets or sets the name.
-        /// </summary>
+        /// 
         public string Name { get; set; }
-        /// <summary>
+        /// 
         /// Gets or sets the data.
-        /// </summary>
+        /// 
         public byte[] data { get; set; }
 
-        /// <summary>
+        /// 
         /// Initializes a new instance of the ApiResult{T} class.
-        /// </summary>
+        /// 
         /// <param name="status">The status.</param>
         /// <param name="model">The model.</param>
         /// <param name="message">The message.</param>
@@ -45,9 +45,9 @@ namespace ASI.Basecode.WebApp.Models
             this.Message = message;
         }
 
-        /// <summary>
+        /// 
         /// Initializes a new instance of the ApiResult{T} class.
-        /// </summary>
+        /// 
         /// <param name="status">The status.</param>
         /// <param name="data">The data.</param>
         /// <param name="message">The message.</param>
@@ -58,9 +58,9 @@ namespace ASI.Basecode.WebApp.Models
             this.Message = message;
         }
 
-        /// <summary>
+        /// 
         /// Initializes a new instance of the ApiResult{T} class.
-        /// </summary>
+        /// 
         /// <param name="status">The status.</param>
         /// <param name="name">The name.</param>
         /// <param name="model">The model.</param>
@@ -73,9 +73,9 @@ namespace ASI.Basecode.WebApp.Models
             this.Name = name;
         }
 
-        /// <summary>
+        /// 
         /// Initializes a new instance of the ApiResult{T} class.
-        /// </summary>
+        /// 
         /// <param name="status">The status.</param>
         /// <param name="message">The message.</param>
         public ApiResult(Status status, string message)
@@ -84,9 +84,9 @@ namespace ASI.Basecode.WebApp.Models
             this.Message = message;
         }
 
-        /// <summary>
+        /// 
         /// Initializes a new instance of the ApiResult{T} class.
-        /// </summary>
+        /// 
         /// <param name="status">The status.</param>
         /// <param name="model">The model.</param>
         /// <param name="message">The message.</param>
@@ -97,9 +97,9 @@ namespace ASI.Basecode.WebApp.Models
             this.Message = message;
         }
 
-        /// <summary>
+        /// 
         /// Creates the API success response.
-        /// </summary>
+        /// 
         /// <param name="model">The model.</param>
         /// <param name="message">The message.</param>
         /// <returns>ApiResult object</returns>
@@ -108,9 +108,9 @@ namespace ASI.Basecode.WebApp.Models
             return new ApiResult<T>(Status.Success, model, message);
         }
 
-        /// <summary>
+        /// 
         /// Creates the API success response.
-        /// </summary>
+        /// 
         /// <param name="model">The model.</param>
         /// <param name="message">The message.</param>
         /// <returns>ApiResult object</returns>
@@ -119,9 +119,9 @@ namespace ASI.Basecode.WebApp.Models
             return new ApiResult<object>(Status.Success, model, message);
         }
 
-        /// <summary>
+        /// 
         /// Creates the API success response.
-        /// </summary>
+        /// 
         /// <param name="name">The name.</param>
         /// <param name="model">The model.</param>
         /// <param name="message">The message.</param>
@@ -131,9 +131,9 @@ namespace ASI.Basecode.WebApp.Models
             return new ApiResult<object>(Status.Success, name, model, message);
         }
 
-        /// <summary>
+        /// 
         /// Creates the API success response.
-        /// </summary>
+        /// 
         /// <param name="message">The message.</param>
         /// <returns>ApiResult object</returns>
         public static ApiResult<object> CreateSuccess(string message)
@@ -141,9 +141,9 @@ namespace ASI.Basecode.WebApp.Models
             return new ApiResult<object>(Status.Success, message);
         }
 
-        /// <summary>
+        /// 
         /// Creates the API success response.
-        /// </summary>
+        /// 
         /// <param name="data">The data.</param>
         /// <param name="message">The message.</param>
         /// <returns>ApiResult object</returns>
@@ -152,9 +152,9 @@ namespace ASI.Basecode.WebApp.Models
             return new ApiResult<T>(Status.Success, data, message);
         }
 
-        /// <summary>
+        /// 
         /// Creates the API error response.
-        /// </summary>
+        /// 
         /// <param name="message">The message.</param>
         /// <returns>ApiResult object</returns>
         public static ApiResult<T> CreateError(string message)

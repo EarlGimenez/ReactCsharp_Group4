@@ -16,9 +16,9 @@ namespace ASI.Basecode.WebApp
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly TokenProviderOptions _tokenProviderOptions;
 
-        /// <summary>
+        /// 
         /// Configure authorization
-        /// </summary>
+        /// 
         private void ConfigureAuthorization()
         {
             var token = Configuration.GetTokenAuthentication();

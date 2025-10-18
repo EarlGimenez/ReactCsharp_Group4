@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ASI.Basecode.WebApp.Authentication
 {
-    /// <summary>
+    /// 
     /// Token Provider Middleware
-    /// </summary>
+    /// 
     public class TokenProviderMiddleware
     {
         private readonly RequestDelegate _next;
@@ -18,9 +18,9 @@ namespace ASI.Basecode.WebApp.Authentication
         private readonly JsonSerializerSettings _serializerSettings;
         private readonly TokenProvider _tokenProvider;
 
-        /// <summary>
+        /// 
         /// Initializes a new instance of the TokenProviderMiddleware class.
-        /// </summary>
+        /// 
         /// <param name="next">Request</param>
         /// <param name="options">Options</param>
         public TokenProviderMiddleware(RequestDelegate next, IOptions<TokenProviderOptions> options)
@@ -36,9 +36,9 @@ namespace ASI.Basecode.WebApp.Authentication
             };
         }
 
-        /// <summary>
+        /// 
         /// Invokes the specified context.
-        /// </summary>
+        /// 
         /// <param name="context">HttpContext</param>
         /// <returns>Task</returns>
         public Task Invoke(HttpContext context)
@@ -59,9 +59,9 @@ namespace ASI.Basecode.WebApp.Authentication
             return GenerateTokenUser(context);
         }
 
-        /// <summary>
+        /// 
         /// Generates the user token
-        /// </summary>
+        /// 
         /// <param name="context">HttpContext</param>
         private async Task GenerateTokenUser(HttpContext context)
         {
@@ -98,9 +98,9 @@ namespace ASI.Basecode.WebApp.Authentication
             await context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
         }
 
-        /// <summary>
+        /// 
         /// Throws if invalid options.
-        /// </summary>
+        /// 
         /// <param name="options">The options.</param>
         private static void ThrowIfInvalidOptions(TokenProviderOptions options)
         {
@@ -140,9 +140,9 @@ namespace ASI.Basecode.WebApp.Authentication
             }
         }
 
-        /// <summary>
+        /// 
         /// Converts to unix epoch date.
-        /// </summary>
+        /// 
         /// <param name="date">Date</param>
         /// <returns>Parsed date</returns>
         public static long ToUnixEpochDate(DateTime date) => new DateTimeOffset(date).ToUniversalTime().ToUnixTimeSeconds();

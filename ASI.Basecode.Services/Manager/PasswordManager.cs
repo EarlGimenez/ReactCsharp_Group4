@@ -6,28 +6,28 @@ using System.Text;
 
 namespace ASI.Basecode.Services.Manager
 {
-    /// <summary>
+    /// 
     /// Password Manager
-    /// </summary>
+    /// 
     public class PasswordManager
     {
-        /// <summary>
+        /// 
         /// Gets or sets the secret key.
-        /// </summary>
+        /// 
         public static string secretKey { get; set; }
 
-        /// <summary>
+        /// 
         /// Sets up.
-        /// </summary>
+        /// 
         /// <param name="tokenAuthConfig">Token authentication configuration</param>
         public static void SetUp(IConfigurationSection tokenAuthConfig)
         {
             secretKey = tokenAuthConfig.GetValue<string>("SecretKey");
         }
 
-        /// <summary>
+        /// 
         /// Encrypts the password.
-        /// </summary>
+        /// 
         /// <param name="password">The password.</param>
         /// <returns></returns>
         public static string EncryptPassword(string password)
@@ -62,9 +62,9 @@ namespace ASI.Basecode.Services.Manager
             return Convert.ToBase64String(array);
         }
 
-        /// <summary>
+        /// 
         /// Decrypts the password.
-        /// </summary>
+        /// 
         /// <param name="encryptedPassword">The encrypted password.</param>
         /// <returns></returns>
         public static string DecryptPassword(string encryptedPassword)

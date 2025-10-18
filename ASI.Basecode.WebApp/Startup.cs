@@ -20,9 +20,9 @@ using System.Text;
 
 namespace ASI.Basecode.WebApp
 {
-    /// <summary>
+    /// 
     /// For configuring services on application startup.
-    /// </summary>
+    /// 
     /// <remarks>
     /// <para>Method call sequence for instances of this class:</para>
     /// <para>1. constructor</para>
@@ -32,9 +32,9 @@ namespace ASI.Basecode.WebApp
     /// </remarks>
     internal partial class StartupConfigurer
     {
-        /// <summary>
+        /// 
         /// Gets the configuration.
-        /// </summary>
+        /// 
         private IConfiguration Configuration { get; }
 
         private IApplicationBuilder _app;
@@ -43,9 +43,9 @@ namespace ASI.Basecode.WebApp
 
         private IServiceCollection _services;
 
-        /// <summary>
+        /// 
         /// Initialize new <see cref="StartupConfigurer"/> instance using <paramref name="configuration"/>
-        /// </summary>
+        /// 
         /// <param name="configuration"></param>
         public StartupConfigurer(IConfiguration configuration)
         {
@@ -72,9 +72,9 @@ namespace ASI.Basecode.WebApp
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
-        /// <summary>
+        /// 
         /// Use this method to add services to the container.
-        /// </summary>
+        /// 
         /// <param name="services">Services</param>
         public void ConfigureServices(IServiceCollection services)
         {
@@ -120,9 +120,9 @@ namespace ASI.Basecode.WebApp
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
         }
 
-        /// <summary>
+        /// 
         /// Configure application
-        /// </summary>
+        /// 
         /// <param name="app"></param>
         /// <param name="env"></param>
         public void ConfigureApp(IApplicationBuilder app, IWebHostEnvironment env)
@@ -145,10 +145,13 @@ namespace ASI.Basecode.WebApp
             // Localization
             var options = this._app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             this._app.UseRequestLocalization(options.Value);
-            this._app.UseCors("AllowReactApp");
-
-            this._app.UseSession();
+            
             this._app.UseRouting();
+            
+            // CORS must be between UseRouting and UseEndpoints
+            this._app.UseCors("AllowReactApp");
+            
+            this._app.UseSession();
 
             this._app.UseAuthentication();
             this._app.UseAuthorization();
