@@ -48,13 +48,13 @@ namespace ASI.Basecode.Services.Services
             var endTime = TimeSpan.Parse(model.EndTime);
 
             // Check for conflicts
-            if (CheckBookingConflict(model.RoomId, bookingDate, startTime, endTime))  // Changed from RoomID
+            if (CheckBookingConflict(model.RoomId, bookingDate, startTime, endTime)) 
             {
                 throw new Exception("Booking conflict detected. This time slot is already booked.");
             }
 
             // Verify room exists
-            if (!_roomRepository.RoomExists(model.RoomId))  // Changed from RoomID
+            if (!_roomRepository.RoomExists(model.RoomId)) 
             {
                 throw new Exception("Room not found");
             }
@@ -62,8 +62,8 @@ namespace ASI.Basecode.Services.Services
             var booking = new Booking
             {
                 BookingID = Guid.NewGuid(),
-                RoomID = model.RoomId,     // Changed from RoomID
-                UserID = model.UserId,      // Changed from UserID
+                RoomID = model.RoomId,     
+                UserID = model.UserId,      
                 Title = model.Title,
                 BookingDate = bookingDate,
                 StartTime = startTime,
@@ -71,9 +71,9 @@ namespace ASI.Basecode.Services.Services
                 Description = model.Description,
                 RecurrenceRule = model.RecurrenceRule,
                 CreatedAt = DateTimeOffset.Now,
-                CreatedBy = model.UserId.ToString(),    // Changed from UserID
+                CreatedBy = model.UserId.ToString(),   
                 ModifiedAt = DateTimeOffset.Now,
-                ModifiedBy = model.UserId.ToString()     // Changed from UserID
+                ModifiedBy = model.UserId.ToString()
             };
 
             _bookingRepository.AddBooking(booking);
@@ -152,9 +152,9 @@ namespace ASI.Basecode.Services.Services
         {
             return new BookingViewModel
             {
-                BookingId = booking.BookingID,     // Changed from BookingID
-                RoomId = booking.RoomID,           // Changed from RoomID
-                UserId = booking.UserID,           // Changed from UserID
+                BookingId = booking.BookingID,     
+                RoomId = booking.RoomID,           
+                UserId = booking.UserID,           
                 Title = booking.Title,
                 BookingDate = booking.BookingDate.ToString("yyyy-MM-dd"),
                 StartTime = booking.StartTime.ToString(@"hh\:mm"),
