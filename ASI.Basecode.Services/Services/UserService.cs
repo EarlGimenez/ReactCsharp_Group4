@@ -15,11 +15,16 @@ namespace ASI.Basecode.Services.Services
     {
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
 
-        public UserService(IUserRepository repository, IMapper mapper)
+        public UserService(
+            IUserRepository repository, 
+            IMapper mapper,
+            INotificationService notificationService)
         {
             _mapper = mapper;
             _repository = repository;
+            _notificationService = notificationService;
         }
 
         public LoginResult AuthenticateUser(string userId, string password, ref User user)
@@ -120,6 +125,24 @@ namespace ASI.Basecode.Services.Services
             };
 
             _repository.AddUser(user);
+
+            // Create notification for new user registration
+            try
+            {
+                _notificationService.CreateNotification(new CreateNotificationViewModel
+                {
+                    Title = "New User Registered",
+                    Message = $"{user.FirstName} {user.LastName} (@{user.Username}) has registered",
+                    Type = "user_registered",
+                    RelatedEntityId = user.UserID,
+                    CreatedBy = "System"
+                });
+            }
+            catch (Exception ex)
+            {
+                // Log but don't fail the registration if notification fails
+                Console.WriteLine($"Failed to create notification: {ex.Message}");
+            }
 
             return new UserViewModel
             {

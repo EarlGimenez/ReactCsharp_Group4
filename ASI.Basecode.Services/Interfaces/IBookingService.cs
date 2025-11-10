@@ -8,6 +8,7 @@ namespace ASI.Basecode.Services.Interfaces
     {
         IEnumerable<BookingViewModel> GetAllBookings();
         IEnumerable<BookingViewModel> GetBookingsByUserId(Guid userId);
+        IEnumerable<BookingViewModel> GetBookingsByDateRange(DateTime startDate, DateTime endDate);
         BookingViewModel GetBookingById(Guid bookingId);
         BookingViewModel CreateBooking(CreateBookingViewModel model);
         void UpdateBooking(Guid bookingId, UpdateBookingViewModel model);

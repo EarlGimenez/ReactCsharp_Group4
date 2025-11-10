@@ -13,11 +13,16 @@ namespace ASI.Basecode.Services.Services
     {
         private readonly IBookingRepository _bookingRepository;
         private readonly IRoomRepository _roomRepository;
+        private readonly INotificationService _notificationService;
 
-        public BookingService(IBookingRepository bookingRepository, IRoomRepository roomRepository)
+        public BookingService(
+            IBookingRepository bookingRepository, 
+            IRoomRepository roomRepository,
+            INotificationService notificationService)
         {
             _bookingRepository = bookingRepository;
             _roomRepository = roomRepository;
+            _notificationService = notificationService;
         }
 
         public IEnumerable<BookingViewModel> GetAllBookings()
@@ -29,6 +34,12 @@ namespace ASI.Basecode.Services.Services
         public IEnumerable<BookingViewModel> GetBookingsByUserId(Guid userId)
         {
             var bookings = _bookingRepository.GetBookingsByUserId(userId).ToList();
+            return MapToViewModels(bookings);
+        }
+
+        public IEnumerable<BookingViewModel> GetBookingsByDateRange(DateTime startDate, DateTime endDate)
+        {
+            var bookings = _bookingRepository.GetBookingsByDateRange(startDate, endDate).ToList();
             return MapToViewModels(bookings);
         }
 
@@ -78,6 +89,24 @@ namespace ASI.Basecode.Services.Services
 
             _bookingRepository.AddBooking(booking);
             
+            // Create notification for new booking
+            try
+            {
+                _notificationService.CreateNotification(new CreateNotificationViewModel
+                {
+                    Title = "New Booking Created",
+                    Message = $"Booking '{model.Title}' has been created for {bookingDate.ToString("MMM dd, yyyy")} at {startTime.ToString(@"hh\:mm")}",
+                    Type = "booking_created",
+                    RelatedEntityId = booking.BookingID,
+                    CreatedBy = model.UserId.ToString()
+                });
+            }
+            catch (Exception ex)
+            {
+                // Log but don't fail the booking if notification fails
+                Console.WriteLine($"Failed to create notification: {ex.Message}");
+            }
+            
             // Fetch the created booking with navigation properties
             var createdBooking = _bookingRepository.GetBookingById(booking.BookingID);
             return MapToViewModel(createdBooking);
@@ -88,17 +117,30 @@ namespace ASI.Basecode.Services.Services
             var booking = _bookingRepository.GetBookingById(bookingId);
             if (booking == null) throw new Exception("Booking not found");
 
+            // Get new room ID if provided, otherwise keep existing
+            var newRoomId = model.RoomId.HasValue && model.RoomId.Value != Guid.Empty 
+                ? model.RoomId.Value 
+                : booking.RoomID;
+
             // Parse date and times if provided
             var bookingDate = string.IsNullOrEmpty(model.BookingDate) ? booking.BookingDate : DateTime.Parse(model.BookingDate);
             var startTime = string.IsNullOrEmpty(model.StartTime) ? booking.StartTime : TimeSpan.Parse(model.StartTime);
             var endTime = string.IsNullOrEmpty(model.EndTime) ? booking.EndTime : TimeSpan.Parse(model.EndTime);
 
-            // Check for conflicts (excluding current booking)
-            if (CheckBookingConflict(booking.RoomID, bookingDate, startTime, endTime, bookingId))
+            // Check for conflicts in the NEW room (excluding current booking)
+            if (CheckBookingConflict(newRoomId, bookingDate, startTime, endTime, bookingId))
             {
                 throw new Exception("Booking conflict detected. This time slot is already booked.");
             }
 
+            // Verify new room exists if room is being changed
+            if (newRoomId != booking.RoomID && !_roomRepository.RoomExists(newRoomId))
+            {
+                throw new Exception("Room not found");
+            }
+
+            // Update all fields including RoomID
+            booking.RoomID = newRoomId;
             booking.Title = model.Title ?? booking.Title;
             booking.BookingDate = bookingDate;
             booking.StartTime = startTime;
@@ -109,6 +151,24 @@ namespace ASI.Basecode.Services.Services
             booking.ModifiedBy = booking.UserID.ToString();
 
             _bookingRepository.UpdateBooking(booking);
+            
+            // Create notification for booking update
+            try
+            {
+                _notificationService.CreateNotification(new CreateNotificationViewModel
+                {
+                    Title = "Booking Updated",
+                    Message = $"Booking '{booking.Title}' has been updated",
+                    Type = "booking_updated",
+                    RelatedEntityId = bookingId,
+                    CreatedBy = booking.UserID.ToString()
+                });
+            }
+            catch (Exception ex)
+            {
+                // Log but don't fail the update if notification fails
+                Console.WriteLine($"Failed to create notification: {ex.Message}");
+            }
         }
 
         public void DeleteBooking(Guid bookingId)
@@ -116,7 +176,28 @@ namespace ASI.Basecode.Services.Services
             var booking = _bookingRepository.GetBookingById(bookingId);
             if (booking == null) throw new Exception("Booking not found");
 
+            var bookingTitle = booking.Title;
+            var userId = booking.UserID;
+
             _bookingRepository.DeleteBooking(booking);
+            
+            // Create notification for booking cancellation
+            try
+            {
+                _notificationService.CreateNotification(new CreateNotificationViewModel
+                {
+                    Title = "Booking Cancelled",
+                    Message = $"Booking '{bookingTitle}' has been cancelled",
+                    Type = "booking_cancelled",
+                    RelatedEntityId = bookingId,
+                    CreatedBy = userId.ToString()
+                });
+            }
+            catch (Exception ex)
+            {
+                // Log but don't fail the deletion if notification fails
+                Console.WriteLine($"Failed to create notification: {ex.Message}");
+            }
         }
 
         public bool CheckBookingConflict(Guid roomId, DateTime date, TimeSpan startTime, TimeSpan endTime, Guid? excludeBookingId = null)

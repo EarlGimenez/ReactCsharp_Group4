@@ -33,6 +33,7 @@ namespace ASI.Basecode.Services.ServiceModels
     
     public class UpdateBookingViewModel
     {
+        public Guid? RoomId { get; set; }
         public string Title { get; set; }
         public string BookingDate { get; set; }
         public string StartTime { get; set; }
