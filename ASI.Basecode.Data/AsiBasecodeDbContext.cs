@@ -17,7 +17,8 @@ namespace ASI.Basecode.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
-        
+        public virtual DbSet<Notification> Notifications { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // User entity configuration
@@ -194,6 +195,40 @@ namespace ASI.Basecode.Data
                     .HasForeignKey(e => e.UserID)
                     .HasConstraintName("FK_Bookings_Users")
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // Notification entity configuration
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.HasKey(e => e.NotificationID);
+
+                entity.Property(e => e.NotificationID)
+                    .HasDefaultValueSql("NEWID()");
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.Message)
+                    .IsRequired();
+
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.IsRead)
+                    .IsRequired()
+                    .HasDefaultValue(false);
+
+                entity.Property(e => e.RelatedEntityID);
+
+                entity.Property(e => e.CreatedAt)
+                    .IsRequired()
+                    .HasDefaultValueSql("SYSDATETIMEOFFSET()");
+
+                entity.Property(e => e.CreatedBy)
+                    .IsRequired()
+                    .HasMaxLength(100);
             });
 
             OnModelCreatingPartial(modelBuilder);

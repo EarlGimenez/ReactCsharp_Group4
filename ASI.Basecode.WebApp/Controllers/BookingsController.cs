@@ -92,12 +92,13 @@ namespace ASI.Basecode.WebApp.Controllers
         /// 
         [HttpPut("{id}")]
         [AllowAnonymous]
-        public ActionResult UpdateBooking(Guid id, [FromBody] UpdateBookingViewModel model)
+        public ActionResult<BookingViewModel> UpdateBooking(Guid id, [FromBody] UpdateBookingViewModel model)
         {
             try
             {
                 _bookingService.UpdateBooking(id, model);
-                return Ok(new { message = "Booking updated successfully" });
+                var updatedBooking = _bookingService.GetBookingById(id);
+                return Ok(updatedBooking);
             }
             catch (Exception ex)
             {
@@ -145,6 +146,26 @@ namespace ASI.Basecode.WebApp.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        /// 
+        /// Get bookings within a date range
+        /// 
+        [HttpGet("range")]
+        [AllowAnonymous]
+        public ActionResult<IEnumerable<BookingViewModel>> GetBookingsInRange([FromQuery] string startDate, [FromQuery] string endDate)
+        {
+            try
+            {
+                var start = DateTime.Parse(startDate);
+                var end = DateTime.Parse(endDate);
+                var bookings = _bookingService.GetBookingsByDateRange(start, end);
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
             }
         }
     }
