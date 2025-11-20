@@ -8,10 +8,6 @@
 
   <ItemGroup>
     <None Remove="appsettings.json.rej" />
-    <Content Remove="WebAppExternal\**" />
-    <Compile Remove="WebAppExternal\**" />
-    <EmbeddedResource Remove="WebAppExternal\**" />
-    <None Remove="WebAppExternal\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,16 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="AllianceOutput\" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="wwwroot\uploads\rooms\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="WebAppExternal\src\views\components\index.ts" />
-    <TypeScriptCompile Include="WebAppExternal\src\views\components\NotificationBadge.tsx" />
-    <TypeScriptCompile Include="WebAppExternal\src\views\containers\Admin\Notifications\AdminNotifications.tsx" />
-    <TypeScriptCompile Include="WebAppExternal\src\views\containers\Admin\Notifications\index.ts" />
-    <TypeScriptCompile Include="WebAppExternal\src\views\services\dashboardService.ts" />
-    <TypeScriptCompile Include="WebAppExternal\src\views\services\notificationService.ts" />
   </ItemGroup>
 </Project>

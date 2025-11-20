@@ -3,6 +3,7 @@ using ASI.Basecode.Data.Interfaces;
 using ASI.Basecode.Data.Repositories;
 using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.Services;
+using ASI.Basecode.Services.ServiceModels;
 using ASI.Basecode.WebApp.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -37,6 +38,7 @@ namespace ASI.Basecode.WebApp
             this._services.AddScoped<IBookingService, BookingService>();
             this._services.AddScoped<IDashboardService, DashboardService>();
             this._services.AddScoped<INotificationService, NotificationService>();
+            this._services.AddScoped<IEmailService, EmailService>();
 
             // Repositories
             this._services.AddScoped<IUserRepository, UserRepository>();
@@ -48,6 +50,9 @@ namespace ASI.Basecode.WebApp
             this._services.AddScoped<SignInManager>();
 
             this._services.AddHttpClient();
+
+            // Email Settings Configuration
+            this._services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             // CORS Configuration - Permissive for development
             this._services.AddCors(options =>
