@@ -201,3 +201,12 @@ node_modules
 # Ignore external web application
 ASI.Basecode.WebApp/Documentation/
 ASI.Basecode.WebApp/WebAppExternal/
+ASI.Basecode.WebApp/AllianceOutput/
+
+# =========================
+# Sensitive Configuration Files
+# =========================
+# Keep email credentials and sensitive data out of Git
+ASI.Basecode.WebApp/appsettings.Development.json
+ASI.Basecode.WebApp/appsettings.*.json
+ASI.Basecode.WebApp/secrets.json
